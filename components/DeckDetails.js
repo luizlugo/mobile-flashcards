@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { white, gray } from '../libs/colors';
 import Button from './Common/Button';
+import { handleDeleteDeck } from '../actions/decks';
 
 const styles = StyleSheet.create({
     container: {
@@ -29,11 +30,8 @@ class DeckDetails extends React.Component {
 
     componentDidMount() {
         const { deck, navigation } = this.props;
-        // updating navigation params with deck name
         navigation.setParams({ screenName: deck.name});
     }
-    
-    
 
     onStartQuizPressed = () => {
         this.props.navigation.navigate('startQuiz', {
@@ -48,12 +46,19 @@ class DeckDetails extends React.Component {
     }
 
     onDeleteDeckPressed = () => {
-        console.log('onDeleteDeckPressed');
+        const { dispatch, navigation } = this.props;
+        navigation.goBack();
+        dispatch(handleDeleteDeck(this.props.deck.id));
     }
 
     render() {
         const { deck } = this.props;
 
+        if (!deck) {
+            return (
+                <View></View>
+            )
+        }
         return (
             <View style={styles.container}>
                 <Text style={styles.deckTitle}>{deck.name}</Text>

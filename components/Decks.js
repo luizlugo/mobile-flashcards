@@ -11,7 +11,6 @@ class Decks extends React.Component {
     }
 
     onRowPressed = (rowId) => {
-        console.log('rowId', rowId);
         this.props.navigation.navigate('deckDetails', {
             deckId: rowId
         });
@@ -40,5 +39,5 @@ const mapStateToProps = ({decks}) => {
     return {
         decks
     }
-}
+};
 export default connect(mapStateToProps)(Decks);

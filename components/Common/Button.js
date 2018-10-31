@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, TouchableWithoutFeedback, StyleSheet, Text, View } from 'react-native';
-import { orange, red, white, gray, black } from '../../libs/colors';
+import { orange, red, white, gray, black, green} from '../../libs/colors';
 
 const styles = StyleSheet.create({
     default: {
@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
     },
     danger: {
         backgroundColor: red,
+    },
+    success: {
+        backgroundColor: green
     },
     text: {
         fontSize: 20,
@@ -40,6 +43,12 @@ export default function Button({name, type, onPress, disabled}) {
             case 'danger':
                 return (
                     <TouchableOpacity style={[styles.default, styles.danger]} onPress={onPress}>
+                        <Text style={styles.text}>{name}</Text>
+                    </TouchableOpacity>
+                );
+            case 'success':
+                return (
+                    <TouchableOpacity style={[styles.default, styles.success]} onPress={onPress}>
                         <Text style={styles.text}>{name}</Text>
                     </TouchableOpacity>
                 );

@@ -24,6 +24,28 @@ export function saveDeck(deck) {
     });
 }
 
+export function addQuestion(question) {
+    return new Promise((_success, _error) => {
+        const id = generateUUID();
+        const questionData = {
+            id,
+            ...question
+        };
+        AsyncStorage.getItem(ASYNC_STORAGE_KEY).then(JSON.parse).then((_decks) => {
+            AsyncStorage.mergeItem(ASYNC_STORAGE_KEY, JSON.stringify({
+                [questionData.deckId] : {
+                    ..._decks[questionData.deckId],
+                    questions: _decks[questionData.deckId].questions.concat(questionData)
+                }
+            }))
+            .then(() => {
+                _success(questionData);
+            })
+            .catch(_error);
+        });
+    });
+}
+
 export function removeDeck(key) {
     return AsyncStorage.getItem(ASYNC_STORAGE_KEY)
         .then((results) => {

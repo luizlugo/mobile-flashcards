@@ -34,14 +34,27 @@ const styles = StyleSheet.create({
 });
 class NewDeck extends React.Component {
     state = {
-        name: ''
+        name: '',
+        invalidForm: true
     };
 
     onChangeText = (_value) => {
         this.setState(() => ({
             name: _value
-        }));
+        }), this.validateForm);
     };
+
+    validateForm = () => {
+        if (this.state.name && this.state.name !== '') {
+            this.setState(() => ({
+                invalidForm: false
+            }))
+        } else {
+            this.setState(() => ({
+                invalidForm: true
+            }))
+        }
+    }
 
     onPress = () => {
         const { dispatch, navigation } = this.props;
@@ -69,7 +82,7 @@ class NewDeck extends React.Component {
                     onChangeText={this.onChangeText}
                     underlineColorAndroid='transparent'
                 />
-                <Button name='Save' onPress={this.onPress} />
+                <Button name='Save' onPress={this.onPress} disabled={this.state.invalidForm} />
             </KeyboardAvoidingView>
         )
     }

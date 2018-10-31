@@ -1,8 +1,9 @@
 import React from 'react';
-import { KeyboardAvoidingView, Text, TextInput, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, Text, TextInput, StyleSheet, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { white, black, orange } from '../libs/colors';
 import Button from './Common/Button';
+import { handleNewQuestion } from '../actions/decks';
 
 const styles = StyleSheet.create({
     container: {
@@ -45,14 +46,12 @@ class AddQuestion extends React.Component {
     onTextChanged = (_value, _key) => {
         this.setState(() => ({
             [_key]: _value
-        }));
+        }), this.isFormValid);
 
-        this.isFormValid();
+        // this.isFormValid();
     }
 
-    isFormValid = () => {
-        console.log('isFormValid', this.state);
-        
+    isFormValid = () => {        
         if ((this.state.question !== '' && this.state.question) && (this.state.answer !== '' && this.state.answer)) {
             this.setState(() => ({
                 invalidForm: false
@@ -65,7 +64,16 @@ class AddQuestion extends React.Component {
     }
 
     onSavePressed = () => {
-        console.log('save');
+        // Save question
+        const { dispatch, deckId, navigation } = this.props;
+        const { question, answer } = this.state;
+        dispatch(handleNewQuestion({
+            question,
+            answer,
+            deckId
+        }));
+        Keyboard.dismiss();
+        navigation.goBack();
     }
 
     render() {
@@ -88,4 +96,9 @@ class AddQuestion extends React.Component {
         )
     }
 }
-export default connect()(AddQuestion);
+const mapStateToProps = (state, { navigation }) => {
+    return {
+        deckId: navigation.state.params.deckId
+    }
+};
+export default connect(mapStateToProps)(AddQuestion);
