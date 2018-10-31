@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import Button from './Common/Button';
 import { white, gray, orange } from '../libs/colors';
+import { clearLocalNotification, setLocalNotification } from '../libs/utils';
 
 const styles = StyleSheet.create({
     container: {
@@ -98,6 +99,8 @@ class StartQuiz extends React.Component {
             this.setState(() => ({
                 showScore: true
             }));
+            clearLocalNotification()
+            .then(setLocalNotification)
         } else {
             this.setState(({ actualQuestion }) => ({
                 actualQuestion: actualQuestion + 1,

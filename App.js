@@ -7,8 +7,13 @@ import { Provider } from 'react-redux';
 import StackView from './components/Common/StackView';
 import CustomStatusBar from './components/Common/CustomStatusBar';
 import { white, orange } from './libs/colors';
+import { setLocalNotification } from './libs/utils';
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+  
   render() {
     return (
       <Provider store={store}>
