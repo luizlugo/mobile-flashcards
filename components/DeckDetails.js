@@ -24,13 +24,15 @@ const styles = StyleSheet.create({
 class DeckDetails extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            title: navigation.state.params.screenName ? navigation.state.params.screenName : 'Deck Details'
+            title: navigation.getParam('screenName', 'Deck Details')
         }
     };
 
     componentDidMount() {
         const { deck, navigation } = this.props;
-        navigation.setParams({ screenName: deck.name});
+        if (deck) {
+            navigation.setParams({ screenName: deck.name });
+        }
     }
 
     onStartQuizPressed = () => {
@@ -64,7 +66,7 @@ class DeckDetails extends React.Component {
                 <Text style={styles.deckTitle}>{deck.name}</Text>
                 <Text style={styles.cardsLength}>{`${deck.questions.length} cards`}</Text>
                 <Button name="Start Quiz" onPress={this.onStartQuizPressed}></Button>
-                <Button name="Add Question" onPress={this.onAddQuestionPressed}></Button>
+                <Button name="Add Card" onPress={this.onAddQuestionPressed}></Button>
                 <Button name="Delete Deck" onPress={this.onDeleteDeckPressed} type="danger"></Button>
             </View>
         )

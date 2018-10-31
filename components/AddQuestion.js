@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 class AddQuestion extends React.Component {
     static navigationOptions = () => {
         return {
-            title: 'Add Question'
+            title: 'Add Card'
         };
     }
     state = {
@@ -91,7 +91,7 @@ class AddQuestion extends React.Component {
                     onChangeText={(_value) => this.onTextChanged(_value, 'answer')}
                     value={this.state.answer}
                 />
-                <Button name="Save Question" onPress={this.onSavePressed} disabled={this.state.invalidForm}></Button>
+                <Button name="Save Card" onPress={this.onSavePressed} disabled={this.state.invalidForm}></Button>
             </KeyboardAvoidingView>
         )
     }
