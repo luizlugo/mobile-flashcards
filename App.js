@@ -1,12 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+// Redux
+import store from './store/';
+import { Provider } from 'react-redux';
+// Init component
+import StackView from './components/Common/StackView';
+import CustomStatusBar from './components/Common/CustomStatusBar';
+import { white, orange } from './libs/colors';
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          <CustomStatusBar backgroundColor={orange} barStyle='light-content' />
+          <StackView />
+        </View>
+      </Provider>
     );
   }
 }
@@ -14,8 +24,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: white
   },
 });
